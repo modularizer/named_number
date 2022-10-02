@@ -15,6 +15,14 @@ Mapping is reversible so you can alos look up a number by its name
 ```python
 print(int(NamedNumber("destructive rhino"))) # 50
 ```
+
+### why
+* fun
+* just cause
+* generate easy to remember names for files, records, parts, etc.
+* `flexible pig` is easier to remember than `116994`
+* use for auto-generated temporary passwords or two-step verification
+
 ### math
 Do math on it and get results in the same named format (_see fancy_number.py for how this works_)
 ```python
