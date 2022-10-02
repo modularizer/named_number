@@ -7,7 +7,7 @@ class NamedNumber(FancyInt):
     def __new__(cls, i: int | str | None = None, fmt: str = "%adjective% %animal%",
                 fmt_type: type = RandomizedNameFmt, groups: dict | None = None, **group_kwargs):
 
-        name_fmt = fmt if isinstance(fmt, NameFmt) else fmt_type(fmt=fmt, groups=groups, **group_kwargs)
+        name_fmt = fmt_type(fmt=fmt, groups=groups, **group_kwargs) if isinstance(fmt, str) else fmt
 
         # if no value is specified, generate a random value
         if i is None or i == "random":

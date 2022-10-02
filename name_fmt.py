@@ -2,6 +2,7 @@ import re
 import sys
 import os
 import math
+import time
 from typing import List, Tuple, Any
 
 try:
@@ -121,42 +122,52 @@ class NameFmt(object):
         self.rng = np.random.default_rng(random_seed) if np is not None and rng is None  and random_seed is not None else rng
         self.init_cipher()
 
-    def init_cipher(self):
-        pass
-
-    def encrypt(self, i):
-        return i
-
-    def decrypt(self, i):
-        return i
-
     def name_from_int(self, i: int) -> str:
-        assert 0 <= i <= self.max_number, "integer out of range"
         i = self.encrypt(i)
+        name = self._name_from_int(i)
+        return self.reformat(name)
+
+    def _name_from_int(self, i: int) -> str:
+        assert 0 <= i <= self.max_number, "integer out of range"
         indices = self.list_of_components(i, self.bases, byteorder=self.byteorder)
         values = [self.groups[i][ind] for i, ind in enumerate(indices)]
         return self.sub_list(self.pattern, values, self.fmt)
 
     def strings_from_name(self, name: str) -> List[str]:
+        name = self.deformat(name)
+        return self._strings_from_name(name)
+
+    def _strings_from_name(self, name: str) -> List[str]:
         values = re.fullmatch(self.match_pattern, name).groups()
-        return values
+        return list(values)
 
     def indices_from_name(self, name: str | List[str]) -> List[int]:
+        name = self.deformat(name) if isinstance(name, str) else [self.deformat(n) for n in name]
+        return self._indices_from_name(name)
+
+    def _indices_from_name(self, name: str | List[str]) -> List[int]:
         if isinstance(name, str):
-            values = self.strings_from_name(name)
+            values = self._strings_from_name(name)
         else:
             values = name
         indices = [group.index(values[i]) for i, group in enumerate(self.groups)]
         return indices
 
     def int_from_indices(self, indices: List[int]) -> int:
+        v = self._int_from_indices(indices)
+        return self.decrypt(v)
+
+    def _int_from_indices(self, indices: List[int]) -> int:
         v = indices[-1]
         for i, _v in enumerate(reversed(indices[:-1])):
             v += _v * self.prod(self.bases[-i-1:])
-        return self.decrypt(v)
+        return v
 
     def int_from_name(self, name: str):
         return self.int_from_indices(self.indices_from_name(name))
+
+    def _int_from_name(self, name: str):
+        return self._int_from_indices(self._indices_from_name(name))
 
     def random_number(self) -> int:
         if self.rng is not None:
@@ -190,14 +201,62 @@ class NameFmt(object):
     def __getitem__(self, item):
         return self(item)
 
+    def init_cipher(self):
+        pass
+
+    def encrypt(self, i):
+        return i
+
+    def decrypt(self, i):
+        return i
+
+    def deformat(self, name):
+        return name
+
+    def reformat(self, name):
+        return name
+
+    def plot_encryption(self, x=100, require_reversible=True):
+        import matplotlib.pyplot as plt
+
+        if isinstance(x, int):
+            x = range(x)
+
+        if isinstance(x, slice):
+            start = x.start if x.start is None else 0
+            stop = x.stop if x.stop is not None else self.max_number + 1
+            step = x.step if x.step is not None else 1
+            x = range(start, stop, step)
+
+        y = []
+        for _x in x:
+            _y = self.encrypt(_x)
+            if require_reversible:
+                assert self.decrypt(_y) == _x, "encryption not reversible"
+            y.append(_y)
+        plt.scatter(x, y)
+
 
 class IncrementingNameFmt(NameFmt):
     pass
 
 
 class RandomizedNameFmt(NameFmt):
+    max_size_allowed = 1 << 23
+    mappings = {}
+
     def init_cipher(self):
-        self.mapping = self.rng.permutation(self.max_number)
+        if self.max_number not in self.mappings:
+            n = self.max_number + 1
+            if n > self.max_size_allowed:
+                raise Exception(f"RandomizedNameFmt does not support sets greater than {self.max_size_allowed} ({n})")
+            # print(f"shuffling array of size {n}")
+            t0 = time.time()
+            m = self.rng.permutation(self.max_number + 1)
+            e = time.time() - t0
+            # print(f"{e=}")
+            self.mappings[self.max_number] = m
+        self.mapping = self.mappings[self.max_number]
 
     def encrypt(self, i):
         return self.mapping[i]
@@ -205,15 +264,25 @@ class RandomizedNameFmt(NameFmt):
     def decrypt(self, i):
         return np.argmax(self.mapping==i)
 
+    def plot_performance(self, bit_length_range=range(28)):
+        import matplotlib.pyplot as plt
+
+        def shuffle_time(n):
+            t0 = time.time()
+            self.rng.permutation(n)
+            return time.time() - t0
+
+        x = list(bit_length_range)
+        y = [shuffle_time(1<<_x) for _x in x]
+        plt.plot(y)
+
 
 if __name__ == "__main__":
     import matplotlib
-
     matplotlib.use('TkAgg')
-    import matplotlib.pyplot as plt
 
-    r= RandomizedNameFmt("%adjective% %color% %animal% %99%")
-    # s = r.fmt_num.bit_length()
+    fmt = RandomizedNameFmt("%adjective% %color% %animal%")
+    for i in range(10):
+        print(fmt(i))
 
-    plt.scatter(list(range(1000)), [r.encrypt(i) for i in range(1000)])
-    # plt.show()
+    fmt.plot_encryption()

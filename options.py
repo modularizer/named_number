@@ -117,6 +117,7 @@ class Options(dict):
         'plural_nouns_1k': Wordlist('wordlists/1k_plural_nouns.txt', load=False),
         'adjectives_1k':Wordlist('wordlists/1k_adjectives.txt', load=False),
     }
+
     charsets = {
         'binary': '01',
         'octadecimal': '01234567',
@@ -153,7 +154,7 @@ class Options(dict):
     }
     charsets.update(super_charsets)
 
-    groups = wordsets
+    groups = wordsets.copy()
     groups.update(charsets)
     
     wordset_aliases = {
@@ -205,7 +206,7 @@ class Options(dict):
         "vowel": "vowels",
         "consonant": "consonants"
     }
-    aliases = wordset_aliases
+    aliases = wordset_aliases.copy()
     aliases.update(charset_aliases)
 
     def __init__(self, groups: dict = None, **group_kwargs):
