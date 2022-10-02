@@ -1,0 +1,30 @@
+# pyproject.toml
+
+[build-system]
+requires      = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "namednumber"
+version = "1.0.0"
+description = "Map integers to fun pseudo-random names following a custom format"
+readme = "README.md"
+authors = [{ name = "Torin Halsted", email = "modularizer@gmail.com" }]
+license = { file = "LICENSE" }
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+]
+keywords = ["feed", "reader", "tutorial"]
+dependencies = []
+requires-python = ">=3.10"
+
+[project.optional-dependencies]
+dev = ["numpy", "pyyaml", "pip-tools", "pytest"]
+
+[project.urls]
+Homepage = "https://modularizer.github.io/named_number/"
+
+[project.scripts]
+namednumber = "named_number.__main__:main"

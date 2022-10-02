@@ -1,4 +1,11 @@
-# NamedNumber
+* [Getting Started](#getting-started)
+  * [basic](#basic)
+  * [why](#why)
+  * [custom](#custom-format)
+* [Shuffling](#shuffling)
+  * [limitations](#limitations)
+  * [encryption placeholder](#encryption-placeholder)  
+* [Stylizing](#stylizing)
 
 ## Getting started
 

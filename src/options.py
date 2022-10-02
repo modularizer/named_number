@@ -1,3 +1,6 @@
+import os.path
+
+
 class OptionGroup(object):
     def __new__(cls, options: str | list, *a, **kw):
         # print(options)
@@ -59,8 +62,14 @@ class Optionset(OptionGroup, list):
 
 
 class Wordlist(Optionset):
+    wordlist_folder = os.path.join(os.path.dirname(__file__), "wordlists")
+
     def __init__(self, fn, load: bool = True):
         super().__init__()
+
+        if (not os.path.exists(fn)) and os.path.exists(new_fn := os.path.join(self.wordlist_folder, fn)):
+            fn = new_fn
+
         if isinstance(fn, str):
             self.fn = fn
             self.loaded = False
@@ -110,12 +119,12 @@ class Options(dict):
     wordsets = {
         'colors_16': ['aqua', 'black', 'blue', 'fuchsia', 'gray', 'green', 'lime', 'maroon', 'navy', 'olive', 'purple',
                       'red', 'silver', 'teal', 'white', 'yellow'],
-        'singular_animals_128': Wordlist('wordlists/128_singular_animals.txt', load=False),
-        'plural_animals_128': Wordlist('wordlists/128_plural_animals.txt', load=False),
+        'singular_animals_128': Wordlist('128_singular_animals.txt', load=False),
+        'plural_animals_128': Wordlist('128_plural_animals.txt', load=False),
         'rgb_24bit': [(r, g, b) for b in range(256) for g in range(256) for r in range(256)],
-        'singular_nouns_1k': Wordlist('wordlists/1k_singular_nouns.txt', load=False),
-        'plural_nouns_1k': Wordlist('wordlists/1k_plural_nouns.txt', load=False),
-        'adjectives_1k':Wordlist('wordlists/1k_adjectives.txt', load=False),
+        'singular_nouns_1k': Wordlist('1k_singular_nouns.txt', load=False),
+        'plural_nouns_1k': Wordlist('1k_plural_nouns.txt', load=False),
+        'adjectives_1k':Wordlist('1k_adjectives.txt', load=False),
     }
 
     charsets = {

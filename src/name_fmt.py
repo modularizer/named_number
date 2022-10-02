@@ -13,7 +13,7 @@ except:
     np = None
 
 
-from options import Options, Optionset, Charset
+from .options import Options, Optionset, Charset
 
 
 class NameFmt(object):
