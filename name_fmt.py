@@ -6,6 +6,8 @@ import time
 from typing import List, Tuple, Any
 
 try:
+    # trying to avoid requiring numpy (or any external packages)
+    # although it is required for the RandomizedNameFmt class
     import numpy as np
 except:
     np = None

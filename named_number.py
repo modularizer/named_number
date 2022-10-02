@@ -1,6 +1,6 @@
 from fancy_number import FancyInt
 
-from name_fmt import NameFmt, RandomizedNameFmt, IncrementingNameFmt
+from name_fmt import RandomizedNameFmt
 
 
 class NamedNumber(FancyInt):

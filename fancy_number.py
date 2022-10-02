@@ -1,5 +1,9 @@
 class FancyNumber(object):
+    """fancy class which can be used to subclass a number so that the result of mathmatecal operations
+    return an instance of the fancy number object"""
+
     def math_result(self, r):
+        """cast the result of a mathematical operation into"""
         try:
             return type(self)(r)
         except:
@@ -112,12 +116,14 @@ class FancyNumber(object):
 
 
 class FancyInt(FancyNumber, int):
+    """a fancy integer which can be extended and will remain a FancyInt even when math is done to it"""
     @classmethod
     def from_bytes(cls, *a, **kw) -> int:
         return cls(int.from_bytes(*a, **kw))
 
 
 class FancyFloat(FancyNumber, float):
+    """a fancyfloat which can be extended and will remain a FancyFloat even when math is done to it"""
     @staticmethod
     def fromhex(*args, **kwargs):
         return FancyFloat(float.fromhex(*args, *kwargs))
@@ -130,6 +136,7 @@ if __name__ == "__main__":
     import os
 
     class MyMagicNumber(FancyInt):
+        """a fun integer which prints itself as an additional expression"""
         def __repr__(self):
             rand = int(int.from_bytes(os.urandom(32), "little")/(1 << (32*8))*self)
             return f"{int(self -rand)} + {rand}"
