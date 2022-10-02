@@ -110,12 +110,12 @@ class Options(dict):
     wordsets = {
         'colors_16': ['aqua', 'black', 'blue', 'fuchsia', 'gray', 'green', 'lime', 'maroon', 'navy', 'olive', 'purple',
                       'red', 'silver', 'teal', 'white', 'yellow'],
-        'singular_animals_128': Wordlist('lists/128_singular_animals.txt', load=False),
-        'plural_animals_128': Wordlist('lists/128_plural_animals.txt', load=False),
+        'singular_animals_128': Wordlist('wordlists/128_singular_animals.txt', load=False),
+        'plural_animals_128': Wordlist('wordlists/128_plural_animals.txt', load=False),
         'rgb_24bit': [(r, g, b) for b in range(256) for g in range(256) for r in range(256)],
-        'singular_nouns_1k': Wordlist('lists/1k_singular_nouns.txt', load=False),
-        'plural_nouns_1k': Wordlist('lists/1k_plural_nouns.txt', load=False),
-        'adjectives_1k':Wordlist('lists/1k_adjectives.txt', load=False),
+        'singular_nouns_1k': Wordlist('wordlists/1k_singular_nouns.txt', load=False),
+        'plural_nouns_1k': Wordlist('wordlists/1k_plural_nouns.txt', load=False),
+        'adjectives_1k':Wordlist('wordlists/1k_adjectives.txt', load=False),
     }
     charsets = {
         'binary': '01',
