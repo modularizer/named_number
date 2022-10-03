@@ -1,8 +1,12 @@
 # NamedNumber
 
+```commandline
+pip install namednumber
+```
 Named number is a simple package which generates unique names which correspond one-to-one with numbers.
 `NamedNumber` subclasses `int`, making it versatile and easy to use. This can be used to generate fun names that are easy to rember for
 log records, database entries, products, temporary passwords, etc.
+
 
 * [Getting Started](#getting-started)
   * [basic](#basic)
@@ -20,7 +24,7 @@ log records, database entries, products, temporary passwords, etc.
 ### basic
 Create an integer with a seemingly randomly shuffled name associated with it
 ```python
-from named_number import NamedNumber
+from namednumber import NamedNumber
 x = NamedNumber(50)
 print(f"{x=}")  # x=<destructive rhino (50)>
 print(str(x))  # destructive rhino
@@ -63,7 +67,7 @@ print(f"{z=}") # z=<happy_rabbit (30)>
 ### saved format
 Save name formats and use them to generate numbers
 ```python
-from named_number import RandomizedNameFmt
+from namednumber import RandomizedNameFmt
 fmt = RandomizedNameFmt("%emotion% %animal% %hex#5%", emotion=['happy', 'sad', 'angry', 'hungry'])
 
 print(f"{fmt(0)=}") # fmt(0)=<sad skunk 3113e (0)>
@@ -80,41 +84,41 @@ print(dict(x)) # {'huge': 151, 'crocodile': 29}
 
 ### generate a random number
 ```commandline
-python src
+namednumber
 ```
 
 ### convert a number
 ```commandline
-python src 51
+namednumber 51
 ```
 
 ### or multiple
 ```commandline
-python src 51 52
+namednumber 51 52
 ```
 ```commandline
-python src :5
+namednumber :5
 ```
 ```commandline
-python src 10:15
+namednumber 10:15
 ```
 ```commandline
-python src 20:40:7
+namednumber 20:40:7
 ```
 
 ### specify format
 ```commandline
-python src :4 --fmt="%emotion% %pet%" --emotion=["happy","sad","angry","hungry"] --pet=["puppy","kitten","turtle","lizard"]
+namednumber :4 --fmt="%emotion% %pet%" --emotion=["happy","sad","angry","hungry"] --pet=["puppy","kitten","turtle","lizard"]
 ```
 
 ### specify --shuffle (default) or --inc
 ```commandline
-python src :8 --fmt="%emotion% %pet%"  --inc --emotion=["happy","sad","angry","hungry"] --pet=["puppy","kitten","turtle","lizard"]
+namednumber :8 --fmt="%emotion% %pet%"  --inc --emotion=["happy","sad","angry","hungry"] --pet=["puppy","kitten","turtle","lizard"]
 ```
 
 ### specify seed
 ```commandline
-python src 50 --seed=321
+namednumber 50 --seed=321
 ```
 
 # Shuffling
@@ -124,6 +128,7 @@ The default functionality of the `NameFmt` object is to use the first wordlist a
 etc. and to convert a number to a list of indices for the bases. Therefore, it will by default produce ordered  incrementing results.
 
 ```python
+from namednumber import NameFmt
 fmt = NameFmt(fmt="%first% %second%", first=["red", "green", "blue"], second=["car", "bike"])
 print(fmt[:]) # [<red car (0)>, <red bike (1)>, <green car (2)>, <green bike (3)>, <blue car (4)>, <blue bike (5)>]
 ```
@@ -221,7 +226,6 @@ print(list(options.wordset_aliases.keys()))
 # ['colors', 'color', 'plural_animal', 'plural_animals', 'animals', 'singular_animal', 'animal', 'plural_nouns',
 # 'plural_noun', 'singular_nouns', 'singular_noun', 'noun', 'adjectives', 'adjective']
 ```
-
 
 #### charset aliases
 ```python

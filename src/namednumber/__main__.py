@@ -2,8 +2,8 @@ import argparse
 import json
 import sys
 
-from named_number import NamedNumber
-from name_fmt import RandomizedNameFmt, NameFmt, IncrementingNameFmt
+from .named_number import NamedNumber
+from .name_fmt import RandomizedNameFmt, NameFmt, IncrementingNameFmt
 
 
 def main():

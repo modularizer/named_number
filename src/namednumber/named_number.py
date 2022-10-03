@@ -1,7 +1,7 @@
 import sys
 
-from fancy_number import FancyInt
-from name_fmt import RandomizedNameFmt
+from .fancy_number import FancyInt
+from .name_fmt import RandomizedNameFmt
 
 
 class NamedNumber(FancyInt):
