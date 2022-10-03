@@ -23,7 +23,7 @@ requires-python = ">=3.10"
 dev = ["pyyaml", "pip-tools", "pytest"]
 
 [project.urls]
-Homepage = "https://modularizer.github.io/named_number/"
+Homepage = "https://modularizer.github.io/namednumber/"
 
 [project.scripts]
-namednumber = "named_number.__main__:main"
+namednumber = "namednumber.__main__:main"

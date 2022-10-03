@@ -37,7 +37,7 @@ def main():
     i = [check(v) for v in args.integer]
     if len(i) == 0:
         i = None
-    if len(i) == 1:
+    elif len(i) == 1:
         i = i[0]
 
     nn = NamedNumber(i, fmt=args.fmt, fmt_type=RandomizedNameFmt if args.shuffle else IncrementingNameFmt,
