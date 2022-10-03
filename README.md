@@ -2,12 +2,14 @@
   * [basic](#basic)
   * [why](#why)
   * [custom](#custom-format)
+  
+* [Command Line](#command-line)
 * [Shuffling](#shuffling)
   * [limitations](#limitations)
   * [encryption placeholder](#encryption-placeholder)  
 * [Stylizing](#stylizing)
 
-## Getting started
+# Getting started
 
 ### basic
 Create an integer with a seemingly randomly shuffled name associated with it
@@ -68,8 +70,48 @@ See the individual values of the components
 ```python
 print(dict(x)) # {'huge': 151, 'crocodile': 29}
 ```
+# Command Line
 
-## Shuffling
+### generate a random number
+```commandline
+python src
+```
+
+### convert a number
+```commandline
+python src 51
+```
+
+### or multiple
+```commandline
+python src 51 52
+```
+```commandline
+python src :5
+```
+```commandline
+python src 10:15
+```
+```commandline
+python src 20:40:7
+```
+
+### specify format
+```commandline
+python src :4 --fmt="%emotion% %pet%" --emotion=["happy","sad","angry","hungry"] --pet=["puppy","kitten","turtle","lizard"]
+```
+
+### specify --shuffle (default) or --inc
+```commandline
+python src :8 --fmt="%emotion% %pet%"  --inc --emotion=["happy","sad","angry","hungry"] --pet=["puppy","kitten","turtle","lizard"]
+```
+
+### specify seed
+```commandline
+python src 50 --seed=321
+```
+
+# Shuffling
 
 ### problem
 The default functionality of the `NameFmt` object is to use the first wordlist as the high bit, second as next highest, 

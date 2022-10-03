@@ -13,7 +13,7 @@ except:
     np = None
 
 
-from .options import Options, Optionset, Charset
+from options import Options, Optionset, Charset
 
 
 class NameFmt(object):
@@ -104,7 +104,7 @@ class NameFmt(object):
 
     def __init__(self, fmt: str = "%adjective% %animal%", groups: dict | None = None, rng: None = None,
                  random_seed: int | None = 12345, options: Options | None = None,  byteorder: str = sys.byteorder,
-                 encrypt = None, decrypt = None, **group_kwargs):
+                 encrypt=None, decrypt=None, **group_kwargs):
         if options is None:
             options = Options()
         self.options = options
@@ -172,10 +172,7 @@ class NameFmt(object):
         return self._int_from_indices(self._indices_from_name(name))
 
     def random_number(self) -> int:
-        if self.rng is not None:
-            r = int(self.rng.random() * self.max_number)
-        else:
-            r = int.from_bytes(os.urandom(int(self.max_number.bit_length()/8)), self.byteorder) % (self.max_number + 1)
+        r = int.from_bytes(os.urandom(int(self.max_number.bit_length()/8)), self.byteorder) % (self.max_number + 1)
         return r
 
     def random_named_number(self) -> int:

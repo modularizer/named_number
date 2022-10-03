@@ -1,12 +1,17 @@
-from .fancy_number import FancyInt
-from .name_fmt import RandomizedNameFmt
+import sys
+
+from fancy_number import FancyInt
+from name_fmt import RandomizedNameFmt
 
 
 class NamedNumber(FancyInt):
     def __new__(cls, i: int | str | None = None, fmt: str = "%adjective% %animal%",
-                fmt_type: type = RandomizedNameFmt, groups: dict | None = None, **group_kwargs):
+                fmt_type: type = RandomizedNameFmt, groups: dict | None = None, rng: None = None,
+                random_seed: int | None = 12345, options: dict | None = None,  byteorder: str = sys.byteorder,
+                encrypt=None, decrypt=None, **group_kwargs):
 
-        name_fmt = fmt_type(fmt=fmt, groups=groups, **group_kwargs) if isinstance(fmt, str) else fmt
+        name_fmt = fmt_type(fmt=fmt, groups=groups, rng=rng, random_seed=random_seed, options=options,
+                            byteorder=byteorder, encrypt=encrypt, decrypt=decrypt, **group_kwargs) if isinstance(fmt, str) else fmt
 
         # if no value is specified, generate a random value
         if i is None or i == "random":
@@ -17,7 +22,8 @@ class NamedNumber(FancyInt):
             i = name_fmt.int_from_name(i)
 
         if isinstance(i, (list, tuple, set)):
-            return type(i)(cls(_i, fmt=fmt, fmt_type=fmt_type, groups=groups, **group_kwargs) for _i in i)
+            return type(i)(cls(_i, fmt=fmt, fmt_type=fmt_type, groups=groups, rng=rng, random_seed=random_seed,
+                               options=options, byteorder=byteorder, encrypt=encrypt, decrypt=decrypt, **group_kwargs) for _i in i)
 
         if isinstance(i, slice):
             start = i.start if i.start is not None else 0
@@ -26,7 +32,8 @@ class NamedNumber(FancyInt):
             i = range(start, stop, step)
 
         if isinstance(i, range):
-            return [cls(_i, fmt=fmt, fmt_type=fmt_type, groups=groups, **group_kwargs) for _i in i]
+            return [cls(_i, fmt=fmt, fmt_type=fmt_type, groups=groups, rng=rng, random_seed=random_seed,
+                        options=options, byteorder=byteorder, encrypt=encrypt, decrypt=decrypt, **group_kwargs) for _i in i]
 
         if not isinstance(i, int):
             try:
