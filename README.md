@@ -1,3 +1,9 @@
+# NamedNumber
+
+Named number is a simple package which generates unique names which correspond one-to-one with numbers.
+`NamedNumber` subclasses `int`, making it versatile and easy to use. This can be used to generate fun names that are easy to rember for
+log records, database entries, products, temporary passwords, etc.
+
 * [Getting Started](#getting-started)
   * [basic](#basic)
   * [why](#why)
