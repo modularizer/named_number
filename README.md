@@ -18,14 +18,14 @@ print(f"{x=}")  # x=<destructive rhino (50)>
 print(str(x))  # destructive rhino
 ```
 
-Mapping is reversible so you can alos look up a number by its name
+Mapping is one to one and reversible so you can also look up a number by its name
 ```python
 print(int(NamedNumber("destructive rhino"))) # 50
 ```
 
 ### why
 * fun
-* just cause
+* just because
 * generate easy to remember names for files, records, parts, etc.
 * `flexible pig` is easier to remember than `116994`
 * use for auto-generated temporary passwords or two-step verification
