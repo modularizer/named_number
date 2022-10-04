@@ -180,7 +180,7 @@ class NameFmt(object):
         return NamedNumber(self.random_number(), fmt=self)
 
     def named_number(self, i: int | None = None, **kw) -> int:
-        from named_number import NamedNumber
+        from .named_number import NamedNumber
         if i is None:
             i = self.random_number()
         return NamedNumber(i, fmt=self, **kw)
